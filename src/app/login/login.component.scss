@@ -1,0 +1,54 @@
+.login-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  font-family: Arial, sans-serif;
+}
+
+.login-form__title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.login-form__group {
+  margin-bottom: 15px;
+}
+
+.login-form__label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.login-form__input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+}
+
+.login-form__input.ng-invalid.ng-touched {
+  border-color: red;
+  background-color: white;
+}
+
+.login-form__error {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 4px;
+}
+
+.login-form__button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.login-form__button:hover {
+  background-color: #0056b3;
+}

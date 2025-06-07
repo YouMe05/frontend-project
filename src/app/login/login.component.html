@@ -1,0 +1,21 @@
+<form [formGroup]="formLogin" class="login-form">
+    <h1 class="login-form__title">Login</h1>
+
+    <div class="login-form__group">
+    <label class="login-form__label">Username:</label>
+    <input type="text" formControlName="username" autocomplete="username" class="login-form__input">
+    <div *ngIf="f['username']?.touched && f['username']?.invalid" class="login-form__error">
+      * กรุณากรอกชื่อผู้ใช้
+    </div>
+  </div>
+
+  <div class="login-form__group">
+    <label class="login-form__label">Password:</label>
+    <input type="password" name="password" autocomplete="password" formControlName="password" class="login-form__input">
+    <div *ngIf="f['password']?.touched && f['password']?.invalid" class="login-form__error">
+      * กรุณากรอกรหัสผ่าน
+    </div>
+  </div>
+
+  <button type="button" class="login-form__button" (click)="onSubmit()">เข้าสู่ระบบ</button>
+</form>
