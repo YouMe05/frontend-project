@@ -1,55 +1,127 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;      /* จัดกลางแนวนอน */
+  padding: 0 16px 40px 16px; /* ไม่มี padding บน ชิดขอบบน */
+  background: #ebeff3;
+  min-height: 100vh;
+  position: relative;
+}
 
 .register-form {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
-  font-family: Arial, sans-serif;
+  max-width: 520px;
+  margin: 60px auto;
+  padding: 40px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .register-form__title {
   text-align: center;
-  margin-bottom: 20px;
+  font-size: 2.3rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 30px;
 }
 
 .register-form__group {
-  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
 }
 
 .register-form__label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #34495e;
 }
 
 .register-form__input {
   width: 100%;
-  padding: 8px;
+  padding: 12px 14px;
+  font-size: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 10px;
+  transition: border-color 0.3s, box-shadow 0.3s;
   box-sizing: border-box;
-  border: 1px solid #ccc;
 }
 
-.register-form__input.ng-invalid.ng-touched {
-  border-color: red;
-  background-color: white;
+.register-form__input:focus {
+  border-color: #007BFF;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
 }
+
+/* Input ที่มี error (class .error) จะเปลี่ยนกรอบและเงา */
+.register-form__input.error {
+  border-color: #e74c3c !important;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.15);
+  background-color: #fffafa;
+}
+
+/* เปลี่ยนสี placeholder เมื่อ input error */
+.register-form__input.error::placeholder {
+  color: #e74c3c;
+  opacity: 0.9;
+}
+
 
 .register-form__error {
-  color: red;
-  font-size: 0.9em;
-  margin-top: 4px;
+  margin-top: 6px;
+  color: #e74c3c;
+  font-size: 0.9rem;
 }
 
 .register-form__button {
   width: 100%;
-  padding: 10px;
-  background-color: #007bff;
+  padding: 14px;
+  background-color: #007BFF;
   color: white;
+  font-size: 1.05rem;
+  font-weight: 600;
   border: none;
+  border-radius: 12px;
   cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 10px;
 }
 
 .register-form__button:hover {
   background-color: #0056b3;
+}
+
+.register-form a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media screen and (max-width: 600px) {
+  .register-form {
+    padding: 25px 20px;
+    margin: 30px 16px;
+  }
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.4;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px; /* เว้นช่องว่างระหว่างข้อความกับลิงก์ */
+  flex-wrap: nowrap;
+}
+
+p a {
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.4;
+  text-decoration: none;
+  color: #007BFF;
+  white-space: nowrap;
 }

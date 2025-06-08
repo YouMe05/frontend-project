@@ -2,57 +2,76 @@
   <h1 class="register-form__title">Register</h1>
 
   <div class="register-form__group">
-    <label class="register-form__label">ชื่อ:</label>
-    <input type="text" formControlName="firstname" class="register-form__input">
+    <label class="register-form__label">Firstname:</label>
+    <input type="text" formControlName="firstname"
+           class="register-form__input"
+           [class.error]="f['firstname'].touched && f['firstname'].invalid">
     <div *ngIf="f['firstname']?.touched && f['firstname']?.invalid" class="register-form__error">
-      * กรุณากรอกชื่อ
+      * Please enter your firstname.
     </div>
   </div>
 
   <div class="register-form__group">
-    <label class="register-form__label">นามสกุล:</label>
-    <input type="text" formControlName="lastname" class="register-form__input">
+    <label class="register-form__label">Lastname:</label>
+    <input type="text" formControlName="lastname"
+           class="register-form__input"
+           [class.error]="f['lastname'].touched && f['lastname'].invalid">
     <div *ngIf="f['lastname']?.touched && f['lastname']?.invalid" class="register-form__error">
-      * กรุณากรอกนามสกุล
+      * Please enter your lastname.
     </div>
   </div>
 
   <div class="register-form__group">
-    <label class="register-form__label">อีเมล:</label>
-    <input type="email" formControlName="email" class="register-form__input">
+    <label class="register-form__label">Email:</label>
+    <input type="email" formControlName="email"
+           class="register-form__input"
+           [class.error]="f['email'].touched && f['email'].invalid">
     <div *ngIf="f['email']?.touched && f['email']?.errors" class="register-form__error">
-      <div *ngIf="f['email'].errors?.['required']">* กรุณากรอกอีเมล</div>
-      <div *ngIf="f['email'].errors?.['email']">* กรุณากรอกอีเมลให้ถูกต้อง</div>
+      <div *ngIf="f['email'].errors?.['required']">* Please enter your mail</div>
+      <div *ngIf="f['email'].errors?.['email']">* Please enter a correct email address.</div>
     </div>
   </div>
 
   <div class="register-form__group">
     <label class="register-form__label">Username:</label>
-    <input type="text" formControlName="username" autocomplete="username" class="register-form__input">
+    <input type="text" formControlName="username" autocomplete="username"
+           class="register-form__input"
+           [class.error]="(f['username'].touched && f['username'].invalid) || (formRegister.errors?.['userExists'] && f['username'].touched)">
     <div *ngIf="f['username']?.touched && f['username']?.invalid" class="register-form__error">
-      * กรุณากรอกชื่อผู้ใช้
+      * Please enter your username.
+    </div>
+    <div *ngIf="formRegister.errors?.['userExists'] && f['username']?.touched" class="register-form__error">
+      * This username already exists. Please choose another one.
     </div>
   </div>
 
   <div class="register-form__group">
     <label class="register-form__label">Password:</label>
-    <input type="password" name="password" autocomplete="password" formControlName="password" class="register-form__input">
+    <input type="password" name="password" autocomplete="password" formControlName="password"
+           class="register-form__input"
+           [class.error]="f['password'].touched && f['password'].invalid">
     <div *ngIf="f['password']?.touched && f['password']?.invalid" class="register-form__error">
-      * กรุณากรอกรหัสผ่าน
+      * Please enter your password.
     </div>
   </div>
 
   <div class="register-form__group">
     <label class="register-form__label">Confirm Password:</label>
-    <input type="password" name="confirmPassword" autocomplete="confirmPassword" formControlName="confirmPassword" class="register-form__input">
+    <input type="password" name="confirmPassword" autocomplete="confirmPassword" formControlName="confirmPassword"
+           class="register-form__input"
+           [class.error]="(f['confirmPassword'].touched && f['confirmPassword'].invalid) || (formRegister.errors?.['passwordMismatch'] && f['confirmPassword'].touched)">
     <div *ngIf="f['confirmPassword']?.touched && f['confirmPassword']?.invalid" class="register-form__error">
-      * กรุณายืนยันรหัสผ่าน
+      * Please confirm your password.
     </div>
     <div *ngIf="formRegister.errors?.['passwordMismatch'] && f['confirmPassword']?.touched" class="register-form__error">
-      * รหัสผ่านไม่ตรงกัน
+      * Passwords don't match. Please try again.
     </div>
   </div>
 
-  <button type="submit" class="register-form__button" (click)="onSubmit()">สมัครสมาชิก</button>
-  <!-- <button type="submit" class="register-form__button" (click)="getDataSession()">Get Data Session</button> -->
+  <button type="submit" class="register-form__button" (click)="onSubmit()">Register</button>
+  <br>
+  <p>
+  Already have an account? <a href="/login"><strong>Login</strong></a> here.
+  </p>
+  
 </form>

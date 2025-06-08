@@ -26,7 +26,7 @@ export class RegisterComponent {
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
       confirmPassword: new FormControl('', Validators.required)
-    }, { validators: this.passwordMatchValidator });
+    }, { validators: [this.passwordMatchValidator, this.UserValidator] });
 
     const stored = sessionStorage.getItem('member');
     if (stored) {
@@ -45,11 +45,36 @@ export class RegisterComponent {
     }
   }
 
+  UserValidator(group: AbstractControl): ValidationErrors | null {
+    const username = group.get('username')?.value;
+    const password = group.get('password')?.value;
+    const stored = sessionStorage.getItem('member');
+
+    if (stored) {
+      const members = JSON.parse(stored);
+      let found = false;
+      for (const user of members) {
+        if (user.username === username) {
+          found = true;
+          break;
+        }
+      }
+
+      if (found) {
+        console.log('ชื่อผู้ใช้นี้มีอยู่แล้ว');
+        return { userExists: true };
+      } else {
+        return null;
+      }
+    }
+    return null;
+  }
+
   onSubmit(): void {
     console.log('ข้อมูลที่กรอก:', this.formRegister);
     console.log('ค่าของข้อมูลที่กรอก:', this.formRegister.value);
-    this.saveData();
     if (this.formRegister.valid) {
+      this.saveData();
       this.formRegister.reset();
       this.router.navigate(['/login']);
     } else {
@@ -66,15 +91,15 @@ export class RegisterComponent {
     sessionStorage.setItem('member', JSON.stringify(this.members));
   }
 
-  getDataSession() {
-    let userData = sessionStorage.getItem('member');
-    if (userData) {
-      let userDataObj = JSON.parse(userData);
-      console.log('member: ', userDataObj);
-    } else {
-      console.log('No user data found in localStorage.');
-    }
-  }
+  // getDataSession() {
+  //   let userData = sessionStorage.getItem('member');
+  //   if (userData) {
+  //     let userDataObj = JSON.parse(userData);
+  //     console.log('member: ', userDataObj);
+  //   } else {
+  //     console.log('No user data found in localStorage.');
+  //   }
+  // }
 
   get f() {
     return this.formRegister.controls;

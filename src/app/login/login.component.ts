@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,12 +11,16 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 })
 export class LoginComponent {
   formLogin !: FormGroup;
+  currentUser: any[] = [];
+  adminUser = { username: 'admin', password: 'admin' };
 
-  constructor() {
+  constructor(private router: Router) {
     this.formLogin = new FormGroup({
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
     });
+
+    sessionStorage.setItem('admin', JSON.stringify(this.adminUser));
 
   }
 
@@ -27,21 +32,35 @@ export class LoginComponent {
     if (stored) {
       const members = JSON.parse(stored);
       let found = false;
-      for (const user of members) {
-        if (user.username === username && user.password === password) {
-          found = true;
-          break;
+      if (username === this.adminUser.username && password === this.adminUser.password) {
+        this.currentUser.push(this.adminUser);
+        sessionStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+        console.log('เข้าสู่ระบบสำเร็จในฐานะผู้ดูแลระบบ');
+        this.router.navigate(['/manage-user']);
+        return;
+      }else{
+        for (const user of members) {
+          if (user.username === username && user.password === password) {
+            this.currentUser.push(user);
+            sessionStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+            found = true;
+            break;
+          }
         }
       }
-
+    
       if (found) {
+        
         console.log('เข้าสู่ระบบสำเร็จ');
+        this.router.navigate(['/profile']);
       } else {
         console.log('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
       }
     } else {
       console.log('ไม่มีข้อมูลผู้ใช้ในระบบ');
     }
+
+    
   }
 
   onSubmit(): void {

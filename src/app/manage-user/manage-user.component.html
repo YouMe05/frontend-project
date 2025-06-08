@@ -1,0 +1,27 @@
+<div class="header">
+  <button class="logout-button" (click)="logout()">Logout</button>
+</div>
+
+<table class="user-table">
+  <thead>
+    <tr>
+      <th>ชื่อผู้ใช้</th>
+      <th>ชื่อ</th>
+      <th>นามสกุล</th>
+      <th>อีเมล</th>
+      <th>การจัดการ</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (userdetail of userList; track $index) {
+      <tr>
+        <td>{{ userdetail.username }}</td>
+        <td>{{ userdetail.firstname }}</td>
+        <td>{{ userdetail.lastname }}</td>
+        <td>{{ userdetail.email }}</td>
+        <td>
+          <button (click)="deleteUser(userdetail)">ลบ</button>
+      </tr>
+    }
+  </tbody>
+</table>

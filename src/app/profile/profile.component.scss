@@ -1,0 +1,83 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;      /* จัดกลางแนวนอน */
+  padding: 0 16px 40px 16px; /* ไม่มี padding บน ชิดขอบบน */
+  background: #ebeff3;
+  min-height: 100vh;
+  position: relative;
+}
+
+.header {
+  width: 100%;
+  position: relative;
+  padding: 16px 0;
+}
+
+.logout-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.profile-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  padding: 32px;
+  width: 100%;
+  max-width: 500px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: 56px; /* เว้นระยะจากปุ่ม logout */
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 24px;
+  color: #333;
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.info-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.label {
+  font-weight: 500;
+  color: #555;
+  width: 45%;
+}
+
+.value {
+  color: #222;
+  text-align: right;
+  width: 55%;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

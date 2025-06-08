@@ -3,19 +3,31 @@
 
     <div class="login-form__group">
     <label class="login-form__label">Username:</label>
-    <input type="text" formControlName="username" autocomplete="username" class="login-form__input">
+    <input type="text" 
+      formControlName="username" 
+      autocomplete="username" 
+      class="login-form__input"
+      [class.error]="f['username'].touched && f['username'].invalid">
     <div *ngIf="f['username']?.touched && f['username']?.invalid" class="login-form__error">
-      * กรุณากรอกชื่อผู้ใช้
+      * Please enter your username.
     </div>
   </div>
 
   <div class="login-form__group">
     <label class="login-form__label">Password:</label>
-    <input type="password" name="password" autocomplete="password" formControlName="password" class="login-form__input">
+    <input type="password" 
+      name="password" 
+      autocomplete="password" 
+      formControlName="password" class="login-form__input"
+      [class.error]="f['password'].touched && f['password'].invalid">
     <div *ngIf="f['password']?.touched && f['password']?.invalid" class="login-form__error">
-      * กรุณากรอกรหัสผ่าน
+      * Please enter your password.
     </div>
   </div>
 
-  <button type="button" class="login-form__button" (click)="onSubmit()">เข้าสู่ระบบ</button>
+  <button type="button" class="login-form__button" (click)="onSubmit()">Login</button>
+  <br>
+  <p>
+  Don't have an account? <a href="/register"><strong>Register</strong></a> here.
+  </p>
 </form>
