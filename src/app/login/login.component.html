@@ -11,6 +11,9 @@
     <div *ngIf="f['username']?.touched && f['username']?.invalid" class="login-form__error">
       * Please enter your username.
     </div>
+    <div *ngIf="formLogin.errors?.['noUserExists'] && f['username']?.touched" class="login-form__error">
+      * This username is not exists. Please register.
+    </div>
   </div>
 
   <div class="login-form__group">

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -18,10 +18,39 @@ export class LoginComponent {
     this.formLogin = new FormGroup({
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
-    });
+    },{validators: [this.checkExistUser]});
 
     sessionStorage.setItem('admin', JSON.stringify(this.adminUser));
 
+  }
+
+  checkExistUser(group: AbstractControl): ValidationErrors | null {
+    const username = group.get('username')?.value;
+
+    const stored = sessionStorage.getItem('member');
+    if (stored) {
+      const members = JSON.parse(stored);
+      const adminUser = JSON.parse(sessionStorage.getItem('admin') || '{}');
+      let found = false;
+      if (username === adminUser.username) {
+        found = true;
+        return null; // Admin user exists, no error
+      }
+
+      for (const user of members) {
+          if (user.username === username) {
+            found = true;
+            break;
+          }
+        }
+
+      if (!found) {
+        return { noUserExists: true };
+      } else {
+        return null;
+      }
+    }
+    return null;
   }
 
   usernamePasswordCheckMatch(): void {
