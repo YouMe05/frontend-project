@@ -8,7 +8,7 @@ export const userAuthGuard: CanActivateFn = (route, state) => {
   if (!currentUser) {
     console.log('No user logged in. Redirecting to login page.');
     router.navigate(['/login']);
-    return false;
+    return false; // Prevent access to routes if not authenticated
   }else{
     const role = JSON.parse(currentUser)[0].role;
 
