@@ -3,30 +3,35 @@ import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors }
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule} from '@angular/common';
 import { Router } from '@angular/router';
+import md5 from 'md5';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    CommonModule
-  ],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
-  formRegister !: FormGroup;
+  formRegister!: FormGroup;
   members: any[] = [];
 
   constructor(private router: Router) {
-    this.formRegister = new FormGroup({
-      firstname: new FormControl('', Validators.required),
-      lastname: new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      username: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required),
-      confirmPassword: new FormControl('', Validators.required)
-    }, { validators: [this.passwordMatchValidator, this.UserValidator] });
+    this.formRegister = new FormGroup(
+      {
+        firstname: new FormControl('', Validators.required),
+        lastname: new FormControl('', Validators.required),
+        email: new FormControl('', [Validators.required, Validators.email]),
+        telephone: new FormControl('', [
+          Validators.required,
+          Validators.pattern('^[0-9]{10}$'),
+        ]),
+        username: new FormControl('', Validators.required),
+        password: new FormControl('', Validators.required),
+        confirmPassword: new FormControl('', Validators.required),
+      },
+      { validators: [this.passwordMatchValidator, this.UserValidator] }
+    );
 
     const stored = sessionStorage.getItem('member');
     if (stored) {
@@ -47,7 +52,6 @@ export class RegisterComponent {
 
   UserValidator(group: AbstractControl): ValidationErrors | null {
     const username = group.get('username')?.value;
-    const password = group.get('password')?.value;
     const stored = sessionStorage.getItem('member');
 
     if (stored) {
@@ -84,7 +88,20 @@ export class RegisterComponent {
   }
 
   saveData() {
-    let formData = this.formRegister.value;
+    // Hash the password before saving
+    //this.formRegister.value.password = md5(this.formRegister.value.password);
+    //this.formRegister.value.confirmPassword = md5(this.formRegister.value.confirmPassword);
+    // this.formRegister.patchValue({
+    //   password: md5(this.formRegister.value.password),
+    //   confirmPassword: md5(this.formRegister.value.confirmPassword),
+    // });
+    let formData = {
+      ...this.formRegister.value,
+      role: 'user',
+    };
+
+    formData.password = md5(formData.password);
+    delete formData.confirmPassword; // Remove confirmPassword before saving
     console.log('formData: ', formData);
     // sessionStorage.setItem('userData', JSON.stringify(formData));
     this.members.push(formData);

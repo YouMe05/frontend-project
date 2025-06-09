@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class ManageUserComponent {
   userList: any[] = [];
-  userdetail = { username: '', email: '', firstname: '', lastname: '' };
+  userdetail = { username: '', email: '', firstname: '', lastname: '' , telephone: '' };
 
   constructor(private router: Router) {
     this.loadUsers();
@@ -27,12 +27,16 @@ export class ManageUserComponent {
   }
 
   deleteUser(index: number): void {
-    this.userList.splice(index, 1);
-    sessionStorage.setItem('member', JSON.stringify(this.userList));
-    this.loadUsers();
+    if(confirm('Do you want to delete the user?')) {
+      this.userList.splice(index, 1);
+      sessionStorage.setItem('member', JSON.stringify(this.userList));
+      this.loadUsers();
+    }
+    
   }
 
   logout(): void {
+    sessionStorage.removeItem('currentUser');
     this.router.navigate(['/login']);
   }
 }

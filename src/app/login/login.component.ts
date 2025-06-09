@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import md5 from 'md5';
 
 @Component({
   selector: 'app-login',
@@ -12,54 +13,30 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   formLogin !: FormGroup;
   currentUser: any[] = [];
-  adminUser = { username: 'admin', password: 'admin' };
+  adminUser = { username: 'admin', password: 'admin' , role : 'admin' }; // ข้อมูลผู้ดูแลระบบ
 
   constructor(private router: Router) {
     this.formLogin = new FormGroup({
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
-    },{validators: [this.checkExistUser]});
-
+    }
+  );
+    this.adminUser.password = md5(this.adminUser.password); // เข้ารหัสรหัสผ่านผู้ดูแลระบบด้วย md5
     sessionStorage.setItem('admin', JSON.stringify(this.adminUser));
 
   }
 
-  checkExistUser(group: AbstractControl): ValidationErrors | null {
-    const username = group.get('username')?.value;
-
-    const stored = sessionStorage.getItem('member');
-    if (stored) {
-      const members = JSON.parse(stored);
-      const adminUser = JSON.parse(sessionStorage.getItem('admin') || '{}');
-      let found = false;
-      if (username === adminUser.username) {
-        found = true;
-        return null; // Admin user exists, no error
-      }
-
-      for (const user of members) {
-          if (user.username === username) {
-            found = true;
-            break;
-          }
-        }
-
-      if (!found) {
-        return { noUserExists: true };
-      } else {
-        return null;
-      }
-    }
-    return null;
-  }
-
   usernamePasswordCheckMatch(): void {
     const username = this.formLogin.get('username')?.value;
-    const password = this.formLogin.get('password')?.value;
+    const password = md5(this.formLogin.get('password')?.value); // ใช้ md5 เข้ารหัสรหัสผ่าน
+    this.currentUser = []; // ล้าง currentUser ก่อน
     const stored = sessionStorage.getItem('member');
+    const adminStored = sessionStorage.getItem('admin');
 
-    if (stored) {
-      const members = JSON.parse(stored);
+    
+    if (stored || adminStored) {
+      console.log('มีข้อมูลผู้ใช้ในระบบ');
+      const members = stored ? JSON.parse(stored) : [];
       let found = false;
       if (username === this.adminUser.username && password === this.adminUser.password) {
         this.currentUser.push(this.adminUser);
@@ -79,11 +56,12 @@ export class LoginComponent {
       }
     
       if (found) {
-        
         console.log('เข้าสู่ระบบสำเร็จ');
         this.router.navigate(['/profile']);
       } else {
         console.log('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
+        alert('Username or password is incorrect.');
+        this.formLogin.reset();
       }
     } else {
       console.log('ไม่มีข้อมูลผู้ใช้ในระบบ');

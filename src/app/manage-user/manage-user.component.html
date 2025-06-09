@@ -9,6 +9,7 @@
       <th>Firstname</th>
       <th>Lastname</th>
       <th>Email</th>
+      <th>Telephone</th>
       <th>Manage</th>
     </tr>
   </thead>
@@ -19,8 +20,9 @@
         <td>{{ userdetail.firstname }}</td>
         <td>{{ userdetail.lastname }}</td>
         <td>{{ userdetail.email }}</td>
+        <td>{{ userdetail.telephone }}</td>
         <td>
-          <button (click)="deleteUser(userdetail)">ลบ</button>
+          <button (click)="deleteUser($index)">ลบ</button>
       </tr>
     }
   </tbody>

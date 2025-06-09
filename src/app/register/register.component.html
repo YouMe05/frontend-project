@@ -33,6 +33,24 @@
   </div>
 
   <div class="register-form__group">
+  <label class="register-form__label">Telephone:</label>
+  <input type="tel"
+         formControlName="telephone"
+         class="register-form__input"
+         [class.error]="f['telephone'].touched && f['telephone'].invalid">
+
+  <div *ngIf="f['telephone'].errors?.['required'] && f['telephone'].touched"
+       class="register-form__error">
+    * Please enter your phone number.
+  </div>
+
+  <div *ngIf="f['telephone'].errors?.['pattern'] && f['telephone'].touched"
+       class="register-form__error">
+    * Please enter a correct phone number.
+  </div>
+</div>
+
+  <div class="register-form__group">
     <label class="register-form__label">Username:</label>
     <input type="text" formControlName="username" autocomplete="username"
            class="register-form__input"

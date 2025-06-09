@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class ProfileComponent {
 
-currentuserinfo = {username: '', email: '', firstname: '', lastname: ''};
+currentuserinfo = {username: '', email: '', firstname: '', lastname: '', telephone: '', role: ''};
 
 constructor(private router: Router){
   this.profile();
@@ -28,7 +28,9 @@ constructor(private router: Router){
         this.currentuserinfo.email = userinfo.email ;
         this.currentuserinfo.firstname = userinfo.firstname;
         this.currentuserinfo.lastname = userinfo.lastname;
-        console.log('ข้อมูลผู้ใช้ปัจจุบัน:', userinfo);
+        this.currentuserinfo.telephone = userinfo.telephone;
+        this.currentuserinfo.role = userinfo.role || 'user'; // กำหนดค่า role เป็น 'user' ถ้าไม่มีข้อมูล
+        console.log('userinfo:', userinfo);
         console.log('ข้อมูลผู้ใช้ปัจจุบัน:', this.currentuserinfo);
       }
     }
@@ -40,6 +42,7 @@ constructor(private router: Router){
   }
 
   logout(): void {
+    sessionStorage.removeItem('currentUser');
     console.log('ออกจากระบบสำเร็จ');
     this.router.navigate(['/login']);
   }
