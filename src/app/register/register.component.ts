@@ -3,12 +3,14 @@ import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors }
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule} from '@angular/common';
 import { Router } from '@angular/router';
+import { BackgroundDirective } from '../directives/background.directive';
+
 import md5 from 'md5';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, BackgroundDirective],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })

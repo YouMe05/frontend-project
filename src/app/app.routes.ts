@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './guard/auth.guard';
-import { nonAuthGuard } from './guard/non-auth.guard';
-import { userAuthGuard } from './guard/user-auth.guard';
-import { adminAuthGuard } from './guard/admin-auth.guard';
+import { authGuard } from './guards/auth.guard';
+import { nonAuthGuard } from './guards/non-auth.guard';
+import { userAuthGuard } from './guards/user-auth.guard';
+import { adminAuthGuard } from './guards/admin-auth.guard';
 
 export const routes: Routes = [
     {
