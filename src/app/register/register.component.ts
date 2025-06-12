@@ -6,11 +6,12 @@ import { Router } from '@angular/router';
 import { BackgroundDirective } from '../directives/background.directive';
 
 import md5 from 'md5';
+import { TestComponent } from "../test/test.component";
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, BackgroundDirective],
+  imports: [ReactiveFormsModule, CommonModule, BackgroundDirective, TestComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
