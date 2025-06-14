@@ -17,10 +17,10 @@ export class LoginComponent {
 
   constructor(private router: Router) {
     this.formLogin = new FormGroup({
-      username: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required),
-    }
-  );
+        username: new FormControl('', Validators.required),
+        password: new FormControl('', Validators.required),
+      }
+    );
     this.adminUser.password = md5(this.adminUser.password); // เข้ารหัสรหัสผ่านผู้ดูแลระบบด้วย md5
     sessionStorage.setItem('admin', JSON.stringify(this.adminUser));
 
